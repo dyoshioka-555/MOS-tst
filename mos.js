@@ -62,12 +62,8 @@ function start_experiment() {
     outfile = name + "_set" + set_num + ".csv";
     file_list = makeFileList();
     console.log(file_list);
-    scores1 = (new Array(file_list.length)).fill(0);
-    scores2 = (new Array(file_list.length)).fill(0);
-    //scores3 = (new Array(file_list.length)).fill(0);
-    eval1 = document.getElementsByName("eval1");
-    eval2 = document.getElementsByName("eval2");
-    //eval3 = document.getElementsByName("eval3");
+    scores = (new Array(file_list.length)).fill(0);
+    eval = document.getElementsByName("eval");
     init()
 }
 
@@ -94,74 +90,24 @@ function makeFileList() {
     return files;
 }
 
-function setSlide() {
-    document.getElementById("page").textContent = "" + (n + 1) + "/" + scores1.length;
-    document.getElementById("slide").innerHTML = 'Slide:<br>'
-        + '<object data="' + file_list[n][2]
-        + '" type="image/jpeg"'
-        + 'width="720px"'
-        + 'height="540px">'
-        + '</object>';
-}
 
 function setAudio() {
-    document.getElementById("page").textContent = "" + (n + 1) + "/" + scores1.length;
-    document.getElementById("audio_ref").innerHTML = 'Reference Voice:<br>'
-        + '<audio id="audio_ref" src="' + file_list[n][2]
-        + '" controls preload="auto">'
-        + '</audio>';
-    document.getElementById("audio1").innerHTML = 'Voice 1:<br>'
+    document.getElementById("page").textContent = "" + (n + 1) + "/" + scores.length;
+    document.getElementById("audio").innerHTML = 'Voice:<br>'
         + '<audio id="audio1" src="' + file_list[n][0]
         + '" controls preload="auto">'
         + '</audio>';
-    document.getElementById("audio2").innerHTML = 'Voice 2:<br>'
-        + '<audio  id="audio2" src="' + file_list[n][1]
-        + '" controls preload="auto">'
-        + '</audio>';
+
 }
 
 
 function init() {
     n = 0;
     setAudio();
-    evalCheck1();
-    evalCheck2();
+    evalCheck();
     setButton();
 }
-function evalCheck1() {
-    const c = scores1[n];
-    if ((c <= 0) || (c > eval1.length)) {
-        for (var i = 0; i < eval1.length; i++) {
-            eval1[i].checked = false;
-        }
-    }
-    else {
-        eval1[c - 1].checked = true;
-    }
-}
-function evalCheck2() {
-    const c = scores2[n];
-    if ((c <= 0) || (c > eval2.length)) {
-        for (var i = 0; i < eval2.length; i++) {
-            eval2[i].checked = false;
-        }
-    }
-    else {
-        eval2[c - 1].checked = true;
-    }
-}
-//function evalCheck3() {
-//    const c = scores3[n];
-//    if ((c <= 0) || (c > eval3.length)) {
-//        for (var i = 0; i < eval3.length; i++) {
-//            eval3[i].checked = false;
-//        }
-//    }
-//    else {
-//        eval3[c - 1].checked = true;
-//    }
-//}
-function evalCheck_ori() {
+function evalCheck() {
     const c = scores[n];
     if ((c <= 0) || (c > eval.length)) {
         for (var i = 0; i < eval.length; i++) {
@@ -169,25 +115,18 @@ function evalCheck_ori() {
         }
     }
     else {
-        eval[c - 1].checked = true;
+        eval[5 - c].checked = true;
     }
 }
 
+
 function setButton() {
-    var finish_flag = 0;
-    var next_flag = 0;
-    if (n == (scores1.length - 1)) {
+    if (n == (scores.length - 1)) {
         document.getElementById("prev").disabled = false;
         document.getElementById("next2").disabled = true;
         document.getElementById("finish").disabled = true;
-        for (var i = 0; i < eval1.length; i++) {
-            if (eval1[i].checked) {
-                finish_flag += 1;
-            }
-            if (eval2[i].checked) {
-                finish_flag += 1;
-            }
-            if (finish_flag >= 2) {
+        for (var i = 0; i < eval.length; i++) {
+            if (eval[i].checked) {
                 document.getElementById("finish").disabled = false;
                 break;
             }
@@ -202,57 +141,30 @@ function setButton() {
         }
         document.getElementById("next2").disabled = true;
         document.getElementById("finish").disabled = true;
-        for (var i = 0; i < eval1.length; i++) {
-            console.log(next_flag);
-            if (eval1[i].checked) {
-                next_flag += 1;
-            }
-            if (eval2[i].checked) {
-                next_flag += 1;
-            }
-            if (next_flag >= 2) {
+        for (var i = 0; i < eval.length; i++) {
+            if (eval[i].checked) {
                 document.getElementById("next2").disabled = false;
                 break;
             }
-            console.log(next_flag);
         }
     }
 }
 
-function evaluation(k) {
-    switch (k) {
-        case 1:
-            for (var i = 0; i < eval1.length; i++) {
-                if (eval1[i].checked) {
-                    scores1[n] = i + 1;
-                }
-            }
-            break;
-        case 2:
-            for (var i = 0; i < eval2.length; i++) {
-                if (eval2[i].checked) {
-                    scores2[n] = i + 1;
-                }
-            }
-            break;
-    }
-    setButton();
-}
-function evaluation_ori() {
+function evaluation() {
     for (var i = 0; i < eval.length; i++) {
         if (eval[i].checked) {
-            scores[n] = 1 + i;
+            scores[n] = 5 - i;
         }
     }
     setButton();
 }
+
 
 function exportCSV() {
     var csvData = "";
     for (var i = 0; i < file_list.length; i++) {
         csvData += "" + file_list[i] + ","
-            + scores1[i] + ","
-            + scores2[i] + "\r\n";
+            + scores[i] + "\r\n";
     }
 
     const link = document.createElement("a");
@@ -270,16 +182,14 @@ function exportCSV() {
 function next() {
     n++;
     setAudio();
-    evalCheck1();
-    evalCheck2();
+    evalCheck();
     setButton();
 }
 
 function prev() {
     n--;
     setAudio();
-    evalCheck1();
-    evalCheck2();
+    evalCheck();
     setButton();
 }
 
@@ -301,14 +211,13 @@ var method1;
 var method2;
 var method3;
 //var method4;
+
 var outfile;
 var file_list;
-var scores1;
-var scores2;
-//var scores3;
+var scores;
+
 
 // ローカルで行う場合はloadText()は動作しないため
 var n = 0;
-var eval1 = document.getElementsByName("eval1");
-var eval2 = document.getElementsByName("eval2");
+var eval = document.getElementsByName("eval");
 //var eval3 = document.getElementsByName("eval3");

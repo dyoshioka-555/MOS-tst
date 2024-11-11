@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>ABX Test for Disfluency</title>
+    <title>MOS Test for Disfluency</title>
 </head>
 
 <body>
@@ -12,10 +12,10 @@
     <!-- 注意書きなど -->
     <div style="border:1px solid #000000; padding: 10px; border-radius: 0px; background: ##ffffff;">
         <p>
-        <h1>ABX Test for Disfluency</h1>
+        <h1>MOS Test for Disfluency</h1>
 
         評価実験へのご協力、感謝します。</br>
-        参照音声を聴いた後に2つの音声を聴いて、相応しいと思う評価を付けてください。</br>
+        各音声を聴いて、相応しいと思う評価を付けてください。</br>
         以下、実験の詳細と、今回扱う「非流暢性」について説明します。
 
 
@@ -93,22 +93,13 @@
     <div id="Display2" style="display:none;">
         <!-- 注意書きなど <body onload="init()"> -->
         <p id="page"></p>
-        <p id="audio_ref"></p>
-        <p id="audio1"></p>
-        <p id="audio2"></p>
+        <p id="audio"></p>
         <p>
-            <li>参照音声の「非流暢性」に関する話し方を再現できているのはどちらですか？</li>
-            <label><input type="radio" name="eval1" onclick="evaluation(1)">1の方が良い</label><br>
-            <label><input type="radio" name="eval1" onclick="evaluation(1)">どちらかと言えば1の方が良い</label><br>
-            <label><input type="radio" name="eval1" onclick="evaluation(1)">どちらかと言えば2の方が良い</label><br>
-            <label><input type="radio" name="eval1" onclick="evaluation(1)">2の方が良い</label><br>
-        </p>
-        <p>
-            <li>参照音声に関わらず、より自然だと感じる音声はどちらですか？</li>
-            <label><input type="radio" name="eval2" onclick="evaluation(2)">1の方が良い</label><br>
-            <label><input type="radio" name="eval2" onclick="evaluation(2)">どちらかと言えば1の方が良い</label><br>
-            <label><input type="radio" name="eval2" onclick="evaluation(2)">どちらかと言えば2の方が良い</label><br>
-            <label><input type="radio" name="eval2" onclick="evaluation(2)">2の方が良い</label><br>
+            <label><input type="radio" name="eval" onclick="evaluation()">Excellent</label><br>
+            <label><input type="radio" name="eval" onclick="evaluation()">Good</label><br>
+            <label><input type="radio" name="eval" onclick="evaluation()">Fair</label><br>
+            <label><input type="radio" name="eval" onclick="evaluation()">Poor</label><br>
+            <label><input type="radio" name="eval" onclick="evaluation()">Bad</label><br>
         </p>
         <p>
             <button id="prev" onclick="prev()">prev</button>
