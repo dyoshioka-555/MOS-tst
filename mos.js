@@ -53,9 +53,10 @@ function start_experiment() {
 
     var method_paths = [];
 
-    method_paths.push(wav_dir + "set" + set_num + "/a.list");
-    method_paths.push(wav_dir + "set" + set_num + "/b.list");
-    method_paths.push(wav_dir + "set" + set_num + "/b.list");
+    method_paths.push(wav_dir + "set" + set_num + "/ori.list");
+    method_paths.push(wav_dir + "set" + set_num + "/Fastspeech2.list");
+    method_paths.push(wav_dir + "set" + set_num + "/VITS.list");
+    method_paths.push(wav_dir + "set" + set_num + "/DVT.list");
 
     file_list = makeFileList(method_paths);
     console.log(file_list);
