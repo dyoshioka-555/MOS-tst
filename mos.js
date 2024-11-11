@@ -50,20 +50,19 @@ function start_experiment() {
     Display();
 
     // read filepath
-    var method1_list = wav_dir + "set" + set_num + "/a.list";
-    var method2_list = wav_dir + "set" + set_num + "/b.list";
-    var method3_list = wav_dir + "set" + set_num + "/c.list";
-    //var method4_list = wav_dir + "set" + set_num + "/usfgan.list";
-    //natural = loadText(natural_list);
-    method1 = loadText(method1_list);
-    method2 = loadText(method2_list);
-    method3 = loadText(method3_list);
-    //method4 = loadText(method4_list);
-    outfile = name + "_set" + set_num + ".csv";
-    file_list = makeFileList();
+
+    var method_paths = [];
+
+    method_paths.push(wav_dir + "set" + set_num + "/a.list");
+    method_paths.push(wav_dir + "set" + set_num + "/b.list");
+    method_paths.push(wav_dir + "set" + set_num + "/b.list");
+
+    file_list = makeFileList(method_paths);
     console.log(file_list);
+    outfile = name + "_set" + set_num + ".csv";
     scores = (new Array(file_list.length)).fill(0);
     eval = document.getElementsByName("eval");
+    outfile = name + "_set" + set_num + ".csv";
     init()
 }
 
@@ -84,8 +83,12 @@ function loadText(filename) {
 }
 
 // make file list
-function makeFileList() {
-    var files = method1.zip(method2, method3);
+function makeFileList(method_paths) {
+    var files = [];
+    for (var i = 0; i < method_paths.length; i++) {
+        tmp = loadText(method_paths[i]);
+        files = files.concat(tmp);
+    }
     files.shuffle();
     return files;
 }
